@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 
 // React-Router:
+import { Link } from 'react-router-dom';
+
+// API:
 import * as userAPI from '../../services/userAPI';
 
 // Components:
@@ -38,6 +41,11 @@ class Header extends Component {
     if (user === null) return null;
     return (
       <header data-testid="header-component">
+        <section>
+          <Link to="/search" data-testid="link-to-search">Search</Link>
+          <Link to="/favorites" data-testid="link-to-favorites">Favorites</Link>
+          <Link to="/profile" data-testid="link-to-profile">Profile</Link>
+        </section>
         <p data-testid="header-user-name">{user.name}</p>
       </header>
     );
