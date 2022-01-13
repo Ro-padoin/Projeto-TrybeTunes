@@ -1,7 +1,13 @@
 import React, { Component } from 'react';
+
+// React-Router:
 import { Redirect } from 'react-router-dom';
+
+// API:
 import * as userAPI from '../../services/userAPI';
-import Loading from '../Loading';
+
+// Components:
+import Loading from '../../components/Loading';
 
 class Login extends Component {
   constructor() {
@@ -11,27 +17,27 @@ class Login extends Component {
     this.handleChange = this.handleChange.bind(this);
 
     this.state = {
-      isDisabled: true,
-      isLoading: false,
-      name: '',
-      redirect: false,
+      isDisabled: true, // condicao inicial botao Salvar - desabilitado;
+      isLoading: false, // condicao inicial da pagina de loading - Carregando...
+      name: '', // value input name
+      redirect: false, // condicao inicial de redirecionamento da pagina.
     };
   }
 
   handleChange({ target }) {
     const { name, value, minLength } = target;
     this.setState({
-      [name]: value,
-      isDisabled: (value.length < minLength),
+      [name]: value, // novo state - input name recebe o valor digitado.
+      isDisabled: (value.length < minLength), // condicao para habilitar o botao Salvar.
     });
   }
 
   async handleClickSave() {
     const { name } = this.state;
-    this.setState({ isLoading: true },
+    this.setState({ isLoading: true }, // ao clicar em salvar a pagina de carregamento é acionada até o momento em que a createUser é retornada.
       async () => {
-        await userAPI.createUser({ name });
-        this.setState({
+        await userAPI.createUser({ name }); // createuser é chamada recebendo o state name
+        this.setState({ // após seu retorno carregamento é cessado e a página é redirecionada.
           isLoading: false,
           redirect: true,
         });
