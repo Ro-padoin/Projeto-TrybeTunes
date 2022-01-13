@@ -14,7 +14,7 @@ class Header extends Component {
     super();
 
     this.state = {
-      user: null,
+      user: null, // state inicial do nome de usuario que sera renderizado na tela.
       isLoading: false, // status inicial pagina de carregamento - Carregando ...
     };
   }
@@ -27,7 +27,6 @@ class Header extends Component {
     this.setState({ isLoading: true }, // ao clicar em salvar a pagina de carregamento é acionada até o momento em que a createUser é retornada.
       async () => {
         const user = await userAPI.getUser(); // getUser é chamada recebendo o state name
-        console.log(user);
         this.setState({ // após seu retorno carregamento é cessado e a página é redirecionada.
           isLoading: false,
           user,
