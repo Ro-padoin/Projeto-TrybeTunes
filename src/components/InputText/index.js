@@ -11,7 +11,7 @@ class InputText extends Component {
       name,
       type,
       value,
-      onChange: handleChange,
+      onChange: handleChangeLogin,
       dataTestId,
     } = this.props;
 
@@ -23,7 +23,7 @@ class InputText extends Component {
           id={ id }
           name={ name }
           value={ value }
-          onChange={ handleChange }
+          onChange={ handleChangeLogin }
           data-testid={ dataTestId }
         />
       </label>

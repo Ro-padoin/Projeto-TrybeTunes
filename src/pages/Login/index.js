@@ -17,7 +17,7 @@ class Login extends Component {
     super();
 
     this.handleClickSave = this.handleClickSave.bind(this);
-    this.handleChange = this.handleChange.bind(this);
+    this.handleChangeLogin = this.handleChangeLogin.bind(this);
 
     this.state = {
       isDisabled: true, // condicao inicial botao Salvar - desabilitado;
@@ -27,7 +27,7 @@ class Login extends Component {
     };
   }
 
-  handleChange({ target }) {
+  handleChangeLogin({ target }) {
     const { name, value } = target;
     this.setState({
       [name]: value, // novo state - input name recebe o valor digitado.
@@ -39,7 +39,7 @@ class Login extends Component {
     const { nameLogin: name } = this.state;
     this.setState({ isLoading: true }, // ao clicar em salvar a pagina de carregamento é acionada até o momento em que a createUser é retornada.
       async () => {
-        await userAPI.createUser({ name }); // createuser é chamada recebendo o state name
+        await userAPI.createUser({ name }); // createUser é chamada recebendo o state name
         this.setState({ // após seu retorno carregamento é cessado e a página é redirecionada.
           isLoading: false,
           redirect: true,
@@ -52,25 +52,27 @@ class Login extends Component {
     if (isLoading) return <Loading />;
     if (redirect) return <Redirect to="/search" />;
     return (
-      <section data-testid="page-login">
-        <InputText
-          textLabel="Nome: "
-          type="text"
-          data-testid="login-name-input"
-          id="login"
-          name="nameLogin"
-          value={ name }
-          onChange={ this.handleChange }
-        />
-        <button
-          type="button"
-          data-testid="login-submit-button"
-          disabled={ isDisabled }
-          onClick={ this.handleClickSave }
-        >
-          Entrar
-        </button>
-      </section>
+      <div data-testid="page-login">
+        <form>
+          <InputText
+            textLabel="Nome: "
+            type="text"
+            dataTestId="login-name-input"
+            id="login"
+            name="nameLogin"
+            value={ name }
+            onChange={ this.handleChangeLogin }
+          />
+          <button
+            type="submit"
+            data-testid="login-submit-button"
+            disabled={ isDisabled }
+            onClick={ this.handleClickSave }
+          >
+            Entrar
+          </button>
+        </form>
+      </div>
     );
   }
 }
