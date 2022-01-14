@@ -36,7 +36,7 @@ describe('6 - Faça a requisição para pesquisar artistas', () => {
       expect(spy).toBeCalledWith('Artist Name');
     });
 
-  it('Será validado se ao clicar no botão, o texto Resultado de álbuns de: <artista> aparece na tela',
+    it('Será validado se ao clicar no botão, o texto Resultado de álbuns de: <artista> aparece na tela',
   async () => {
     jest.spyOn(searchAlbumsAPI, 'default').mockImplementation(
       () => Promise.resolve(searchAlbumDefaultResponse),
