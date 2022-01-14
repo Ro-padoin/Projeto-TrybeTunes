@@ -12,8 +12,10 @@ import Loading from '../Loading';
 class MusicCard extends Component {
   constructor(props) {
     super(props);
+
     this.handleChangeFavorite = this.handleChangeFavorite.bind(this);
     this.addFavoriteSong = this.addFavoriteSong.bind(this);
+    this.getFavorites = this.getFavorites.bind(this);
 
     const { album } = props;
 
@@ -21,6 +23,10 @@ class MusicCard extends Component {
       isLoading: false,
       favorites: album.map(() => false),
     };
+  }
+
+  componentDidMount() {
+    this.getFavorites();
   }
 
   handleChangeFavorite(index, { target }) {
@@ -33,6 +39,25 @@ class MusicCard extends Component {
       };
     });
     if (checked) this.addFavoriteSong(album[index]);
+  }
+
+  async getFavorites() {
+    const { album } = this.props;
+    this.setState({ isLoading: true },
+      async () => {
+        const getFavorites = await favoriteSongs.getFavoriteSongs();
+        if (getFavorites !== undefined && getFavorites.length !== 0) {
+          const checkFavorites = album.map((item) => (
+            getFavorites.some((element) => item.trackId === element.trackId)
+          ));
+          this.setState({
+            favorites: [...checkFavorites],
+            isLoading: false,
+          });
+        } else {
+          this.setState({ isLoading: false });
+        }
+      });
   }
 
   async addFavoriteSong(music) {
@@ -58,7 +83,7 @@ class MusicCard extends Component {
                 type="checkbox"
                 data-testid={ `checkbox-music-${trackId}` }
                 id="favorite"
-                name="favorite"
+                name="favorites"
                 checked={ favorites[i] }
                 onChange={ (event) => {
                   this.handleChangeFavorite(i, event);
