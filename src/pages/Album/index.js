@@ -36,7 +36,6 @@ class Album extends Component {
     const { album } = this.state;
     if (album.length === 0) return <Loading />;
     const { artistName, collectionName } = album[0];
-    console.log(album);
     return (
       <div data-testid="page-album">
         <Header />
