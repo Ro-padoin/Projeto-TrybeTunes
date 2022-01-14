@@ -26,7 +26,7 @@ class Header extends Component {
   async getUser() {
     this.setState({ isLoading: true }, // ao clicar em salvar a pagina de carregamento é acionada até o momento em que a createUser é retornada.
       async () => {
-        const user = await userAPI.getUser(); // getUser é chamada recebendo o state name
+        const user = await userAPI.getUser(); // getUser é chamada e seu retorno será armazenado na constante user(mesmo nome state);
         this.setState({ // após seu retorno carregamento é cessado e a página é redirecionada.
           isLoading: false,
           user,

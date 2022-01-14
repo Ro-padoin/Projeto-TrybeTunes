@@ -8,14 +8,21 @@ import PropTypes from 'prop-types';
 
 class SearchResult extends Component {
   render() {
-    const { albuns, artist, shouldResultSearch } = this.props;
+    const {
+      albuns,
+      artist,
+      shouldResultSearch,
+    } = this.props;
+
     if (albuns.length === 0) return 'Nenhum álbum foi encontrado';
+
     return (
       <section>
         {shouldResultSearch && (
           <h2>
             {`Resultado de álbuns de: ${artist}`}
           </h2>)}
+
         {albuns.map(({
           artistId,
           artworkUrl100,
