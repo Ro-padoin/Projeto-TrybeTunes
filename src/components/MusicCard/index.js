@@ -31,7 +31,7 @@ class MusicCard extends Component {
   }
 
   handleChangeFavorite(index, { target }) {
-    const { album } = this.props;
+    const { album, onRemove } = this.props;
     const { checked } = target;
     this.setState(({ favorites }) => {
       favorites[index] = checked;
@@ -40,7 +40,12 @@ class MusicCard extends Component {
       };
     });
     if (checked) this.addFavoriteSong(album[index]);
-    if (!checked) this.removeSong(album[index]);
+    if (!checked) {
+      this.removeSong(album[index]);
+      if (onRemove !== undefined) {
+        onRemove(album[index]);
+      }
+    }
   }
 
   async getFavorites() {
@@ -81,6 +86,9 @@ class MusicCard extends Component {
   render() {
     const { isLoading, favorites } = this.state;
     const { album } = this.props;
+    if (album.length === 0 || album === undefined) {
+      return 'Nenhum item na lista de músicas favoritas.';
+    }
     if (isLoading) return <Loading />;
     return (
       <section>
@@ -88,7 +96,7 @@ class MusicCard extends Component {
           <div key={ trackId }>
             <span>{trackName}</span>
             <label htmlFor="favorite">
-              Favorita:
+              Favorita
               <input
                 type="checkbox"
                 data-testid={ `checkbox-music-${trackId}` }
