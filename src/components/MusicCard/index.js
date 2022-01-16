@@ -16,6 +16,7 @@ class MusicCard extends Component {
     this.handleChangeFavorite = this.handleChangeFavorite.bind(this);
     this.addFavoriteSong = this.addFavoriteSong.bind(this);
     this.getFavorites = this.getFavorites.bind(this);
+    this.removeSong = this.removeSong.bind(this);
 
     const { album } = props;
 
@@ -39,6 +40,7 @@ class MusicCard extends Component {
       };
     });
     if (checked) this.addFavoriteSong(album[index]);
+    if (!checked) this.removeSong(album[index]);
   }
 
   async getFavorites() {
@@ -64,6 +66,14 @@ class MusicCard extends Component {
     this.setState({ isLoading: true },
       async () => {
         await favoriteSongs.addSong(music);
+        this.setState({ isLoading: false });
+      });
+  }
+
+  async removeSong(music) {
+    this.setState({ isLoading: true },
+      async () => {
+        await favoriteSongs.removeSong(music);
         this.setState({ isLoading: false });
       });
   }
