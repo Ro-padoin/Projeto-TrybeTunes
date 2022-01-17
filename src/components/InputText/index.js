@@ -32,13 +32,13 @@ class InputText extends Component {
 }
 
 InputText.propTypes = {
-  textLabel: PropTypes.string,
+  dataTestId: PropTypes.string,
   id: PropTypes.string,
   name: PropTypes.string,
+  onChange: PropTypes.func,
+  textLabel: PropTypes.string,
   type: PropTypes.string,
   value: PropTypes.string,
-  onChange: PropTypes.func,
-  dataTestId: PropTypes.string,
 }.isRequired;
 
 export default InputText;
