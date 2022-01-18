@@ -20,27 +20,27 @@ class Login extends Component {
     this.handleChangeLogin = this.handleChangeLogin.bind(this);
 
     this.state = {
-      isDisabled: true, // condicao inicial botao Salvar - desabilitado;
-      isLoading: false, // condicao inicial da pagina de loading - Carregando...
-      nameLogin: '', // value input name
-      redirect: false, // condicao inicial de redirecionamento da pagina.
+      isDisabled: true,
+      isLoading: false,
+      nameLogin: '',
+      redirect: false,
     };
   }
 
   handleChangeLogin({ target }) {
     const { name, value } = target;
     this.setState({
-      [name]: value, // novo state - input name recebe o valor digitado.
-      isDisabled: (value.length < MIN_LENGTH), // condicao para habilitar o botao Salvar.
+      [name]: value,
+      isDisabled: (value.length < MIN_LENGTH),
     });
   }
 
   async handleClickSave() {
     const { nameLogin: name } = this.state;
-    this.setState({ isLoading: true }, // ao clicar em salvar a pagina de carregamento é acionada até o momento em que a createUser é retornada.
+    this.setState({ isLoading: true },
       async () => {
-        await userAPI.createUser({ name }); // createUser é chamada recebendo o state name
-        this.setState({ // após seu retorno carregamento é cessado e a página é redirecionada.
+        await userAPI.createUser({ name });
+        this.setState({
           isLoading: false,
           redirect: true,
         });

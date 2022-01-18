@@ -20,9 +20,9 @@ class Search extends Component {
     this.fetchArtistAlbum = this.fetchArtistAlbum.bind(this);
 
     this.state = {
-      inputSearch: '', // state inicial do value do input;
-      isDisabled: true, // state inicial do botao Salvar - desabilitado;
-      isLoading: false, // condicao inicial da pagina de loading - Carregando...
+      inputSearch: '',
+      isDisabled: true,
+      isLoading: false,
       shouldForm: true,
       albuns: null,
       searchedArtist: '',
@@ -33,8 +33,8 @@ class Search extends Component {
   handleChangeSearch({ target }) {
     const { name, value } = target;
     this.setState({
-      [name]: value, // novo state - input search recebe o valor digitado.
-      isDisabled: (value.length < MIN_CHAR), // condicao para habilitar o botao Salvar.
+      [name]: value,
+      isDisabled: (value.length < MIN_CHAR),
 
     });
   }
@@ -45,14 +45,13 @@ class Search extends Component {
       inputSearch: '',
       shouldForm: false,
       shouldResultSearch: true,
-    }); // ao clicar em salvar a pagina de carregamento é acionada até o momento em que a createUser é retornada.
+    });
     this.fetchArtistAlbum();
   }
 
   async fetchArtistAlbum() {
     const { inputSearch } = this.state;
-    const albunsEncontrados = await searchAlbumsAPI(inputSearch); // funcao é chamada recebendo o state name
-    // após seu retorno carregamento é cessado e a página é redirecionada.
+    const albunsEncontrados = await searchAlbumsAPI(inputSearch);
     this.setState({
       isLoading: false,
       shouldForm: true,

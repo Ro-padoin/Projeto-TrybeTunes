@@ -22,27 +22,27 @@ class MusicCard extends Component {
 
     this.state = {
       isLoading: false,
-      favorites: album.map(() => false), // atribuição para todas as musicas do album um elemento de favoritas como falso. Pois neste momento as musicas não estarão favoritadas ainda.
+      favorites: album.map(() => false),
     };
   }
 
+  // usado no requisito 9
   componentDidMount() {
-    this.getFavorites(); // recupera a lista de musicas favoritadas pelo usuário.
+    this.getFavorites();
   }
 
-  // funcao para capturar o checked do checkBox quando a musica for favoritada.
-  handleChangeFavorite(index, { target }) { // recebe index e o event, que neste caso quero o target.
-    const { album, onRemove } = this.props; // props recebidas album --> Album e onRemove --> Favorites
-    const { checked } = target; // desestruturação do checked --> true ou false
-    this.setState(({ favorites }) => { // desestruturo favorites de prevState
-      favorites[index] = checked; // favorites na posicao do index seré igual ao valor do checked capturado pelo event no momento do clique
+  handleChangeFavorite(index, { target }) {
+    const { album, onRemove } = this.props;
+    const { checked } = target;
+    this.setState(({ favorites }) => {
+      favorites[index] = checked;
       return {
-        favorites: [...favorites], // favorites recebe um novo array com os valores de true ou false na posicao de cada musica do album.
+        favorites: [...favorites],
       };
     });
-    if (checked) this.addFavoriteSong(album[index]); // se checked for true, chamará a função de adicionar as favoritas passando o album na posicao index.
+    if (checked) this.addFavoriteSong(album[index]);
 
-    // se for false (inicial ou desmarcado) chamara a funcao de remover das favoritas, passando o album na posicao index como parametro. Se a funcao onRemove for diferente de undefined, esta será chamada com album na posicao index como parametro.
+    // usada no requisito 11
     if (!checked) {
       this.removeSong(album[index]);
       if (onRemove !== undefined) {
@@ -51,30 +51,27 @@ class MusicCard extends Component {
     }
   }
 
-  // funcao que resgata as musicas favoritadas ao abrir a paǵina das musicas do album.
-
+  // usado no requisito 9
   async getFavorites() {
     const { album } = this.props;
     this.setState({ isLoading: true },
       async () => {
-        // se o resultado da funcao assincrona atender as condicoes, sera feito uma verificação no album de algum item em que os ids se igualam.
         const getFavorites = await favoriteSongs.getFavoriteSongs();
         if (getFavorites !== undefined && getFavorites.length !== 0) {
           const checkFavorites = album.map((item) => (
             getFavorites.some((element) => item.trackId === element.trackId)
           ));
           this.setState({
-            favorites: [...checkFavorites], // favorite recebe um novo array com true e false
+            favorites: [...checkFavorites],
             isLoading: false,
           });
         } else {
-          // senao somente sera alterado o carregamento da pagina.
           this.setState({ isLoading: false });
         }
       });
   }
 
-  // funcao que add a musica como favorita ao clicar no checkBox
+  // Requisito 8
   async addFavoriteSong(music) {
     this.setState({ isLoading: true },
       async () => {
@@ -83,7 +80,6 @@ class MusicCard extends Component {
       });
   }
 
-  // funcao que remove a musica como favorita ao desmarcar o checkBox
   async removeSong(music) {
     this.setState({ isLoading: true },
       async () => {
