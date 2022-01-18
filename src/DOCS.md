@@ -78,6 +78,7 @@ Ao renderizar a pagina, sao colocadas as seguintes condições:
 Se isLoading for true(sera enquanto creatUser nao retornar) vai renderizar o componente Loading que apresenta o texto "carregando..." na tela, se user estiver null, ou seja, nao retornar nada, a Header nao renderizara nada, somente os links.
 
 ## 5. Crie o formulário para pesquisar artistas
+
 ## 6. Faça a requisição para pesquisar artistas
 
 Requisito contemplado no arquivo "Search" na pasta "pages". Nele devera conter um campo de input do tipo texto e um botao de pesquisar.
@@ -168,10 +169,12 @@ Desmarcando o checkBox, é chamada a funcao removeSong(recebendo album[index]-->
 Chamada, addFavoriteSong seta o state de isLoading para true, executa a funcao assincrona addSong() recebendo album[index] --> que aqui se chama music, onde esta salvara, no localStorage, o objeto com os dados. Apos sua execucao, seta novamente o isLoading para false. Permanecendo na tela, a lista de musicas com o checkbox selecionado ou nao.
 
 ## 9. Faça a requisição para recuperar as músicas favoritas ao entrar na página do Álbum
+
 ## 10. Faça a requisição para recuperar as músicas favoritas e atualizar a lista após favoritar uma música
+
 ## 11. Crie o mecanismo para remover músicas na lista de músicas favoritas
 
-Ao entrar no id do Album, as musicas que ja foram favoritadas devem estar com checkbox marcado. 
+Ao entrar no id do Album, as musicas que ja foram favoritadas devem estar com checkbox marcado. Ao marcar/desmarcar o campo deve atualizar a lista de favoritas.
 
 Usado o mesmo componente e estrutura do requisito 8. Pra mim fez sentido usar o mesmo, pois é onde está sendo renderizada a lista de musicas de cada album.
 
@@ -184,6 +187,20 @@ getFavorites por sua vez, desestrutura album das props, seta o isLoading para tr
 
 favorites[i] esta sendo atribuido no checked da lista, onde sera true ou false.
 
-Desmarcando o checkBox, é chamada a funcao assincrona removeSong(recebendo album[index]--> objeto contendo os dados da musica favoritada)
+Desmarcando o checkBox (condicao elencada na handleChangeFavorite), é chamada a funcao assincrona removeSong(recebendo album[index]--> objeto contendo os dados da musica favoritada). Ela seta o state de isLoading para true depois que obtiver retorno seta isLoading para false e remove do localStorage o objeto contendo os dados da musica desmarcada.
 
+
+## 12. Crie a lista de músicas favoritas
+
+Ao clicar na rota Favorites deve renderizar somente a lista de musicas favoritas. Requisito contemplado na page "Favorites".
+
+O arquivo comeca com todos os imports necessarios.
+
+Criei dois states - isLoading que inicia com false e favoriteList que inicia com um array vazio, posteiormente recebera o array de objeto com os dados de cada musica favoritada.
+
+Ao abrir a pagina a funcao getFavoritesSongs() sera chamada pelo componentDidMount. Ao ser chamada, ela seta isLoading para true, cria a const getFavoritList que recebera como valor o resultado da funcao assincrona getFavoritesSongs() que traz um array de objetos com os dados de todas as musicas favoritadas anteriormente e salvas no localStorage. Apos recuperar as informacoes, seta o state de isLoading para false e atribui a favoritList um spread da constante getFavoritList.
+
+A funcao onRemove ira atualizar a lista renderizada caso algum item seja desmarcado nessa page recebe o album[index], desestrutura a favoriteList e cria uma constante que armazenara 
+
+No componente MusicCard, funcao handleChangeFavorite ha uma condicao que se o checked estiver false chamara uma funcao especifica para outro requisito e se onRemove for diferente de undefined chamara onRemove(passando album[index]), .
 

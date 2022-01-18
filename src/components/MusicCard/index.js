@@ -26,11 +26,12 @@ class MusicCard extends Component {
     };
   }
 
-  // usado no requisito 9
+  // Requisito 9
   componentDidMount() {
     this.getFavorites();
   }
 
+  // Requisito 8
   handleChangeFavorite(index, { target }) {
     const { album, onRemove } = this.props;
     const { checked } = target;
@@ -45,13 +46,14 @@ class MusicCard extends Component {
     // usada no requisito 11
     if (!checked) {
       this.removeSong(album[index]);
+      // Requisito 12
       if (onRemove !== undefined) {
         onRemove(album[index]);
       }
     }
   }
 
-  // usado no requisito 9
+  // Requisito 9
   async getFavorites() {
     const { album } = this.props;
     this.setState({ isLoading: true },
@@ -80,6 +82,7 @@ class MusicCard extends Component {
       });
   }
 
+  // Requisito 9, 10,11
   async removeSong(music) {
     this.setState({ isLoading: true },
       async () => {
